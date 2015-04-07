@@ -14,22 +14,7 @@ define( [
 
 if ( $.mobileBackcompat !== false ) {
 
-	var classSplitterRegex = /\S+/g,
-
-		// splice() is incapable of removing the first element, because specifying a negative
-		// starting index is interpreted as wanting to count from the end of the array. So, we use
-		// shift() to remove the first element
-		removeFromArray = function( array, index ) {
-			index--;
-
-			if ( index === -1 ) {
-				array.shift();
-			} else {
-				array = array.splice( index, 1 );
-			}
-
-			return array;
-		};
+	var classSplitterRegex = /\S+/g;
 
 	$.mobile.widget = $.extend( {}, { backcompat: {
 
@@ -77,8 +62,7 @@ if ( $.mobileBackcompat !== false ) {
 				if ( value ) {
 					classArray.push( className );
 				} else {
-					classArray = removeFromArray( classArray,
-							$.inArray( this._boolOptions[ option ], classArray ) );
+					classArray.splice( $.inArray( this._boolOptions[ option ], classArray ), 1 );
 				}
 				this.option( "classes." + prop, classArray.join( " " ) );
 			}
@@ -113,8 +97,7 @@ if ( $.mobileBackcompat !== false ) {
 							if ( options[ option ] ) {
 								currentClasses.push( className );
 							} else {
-								currentClasses = removeFromArray( currentClasses,
-									$.inArray( className, currentClasses ) );
+								currentClasses.splice( $.inArray( className, currentClasses ), 1 );
 							}
 						}
 					} );
